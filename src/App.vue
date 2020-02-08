@@ -1,19 +1,48 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Form v-on:childToParent="searchForMovie"/>
+    <Display v-if="currentMovieData" :movie="currentMovieData" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Form from './components/Form.vue'
+import Display from './components/Display.vue'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      url: "http://www.omdbapi.com/?apikey=c63f2a17&t=",
+      currentMovieData: {}
+      // apiKey: ""
+    }
+  },
   components: {
-    HelloWorld
+    Form,
+    Display
+  },
+  methods: {
+    searchForMovie(title){ 
+      let fullUrl = this.url + title;
+      fetch(fullUrl, {
+          mode: 'cors',
+          method: 'GET'
+
+      })
+      .then(res => res.json())
+      .then(data=>{
+        this.currentMovieData = data
+      })
+        
+
+    }
+
   }
+
 }
+
+
 </script>
 
 <style>
