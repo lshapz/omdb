@@ -1,30 +1,34 @@
 <template>
   <div id="app">
-    <Form v-on:childToParent="searchForMovie"/>
+    <SearchForm v-on:childToParent="searchForMovie"/>
     <Display v-if="currentMovieData" :movie="currentMovieData" />
+    <SaveForm v-if="currentMovieData" v-on:childToParent="saveUserRating" />
   </div>
 </template>
 
 <script>
-import Form from './components/Form.vue'
+import SearchForm from './components/SearchForm.vue'
 import Display from './components/Display.vue'
+import SaveForm from './components/SaveForm.vue'
 
 export default {
   name: 'app',
   data() {
     return {
       url: "http://www.omdbapi.com/?apikey=c63f2a17&t=",
-      currentMovieData: {}
+      currentMovieData: null
       // apiKey: ""
     }
   },
   components: {
-    Form,
-    Display
+    SearchForm,
+    Display,
+    SaveForm
   },
   methods: {
     searchForMovie(title){ 
       let fullUrl = this.url + title;
+      console.log(fullUrl);
       fetch(fullUrl, {
           mode: 'cors',
           method: 'GET'
@@ -35,6 +39,11 @@ export default {
         this.currentMovieData = data
       })
         
+
+    },
+    saveUserRating(comment, rating) {
+      console.log(comment);
+      console.log(rating);
 
     }
 
