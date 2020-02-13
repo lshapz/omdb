@@ -51,6 +51,7 @@ export default {
       let fullUrl = this.omdburl + title;
       this.currentMovieData = null;
       this.savingMovie = null;
+      this.newFilms = true;
       console.log(fullUrl);
       fetch(fullUrl, {
           mode: 'cors',
