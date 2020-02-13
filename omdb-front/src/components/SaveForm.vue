@@ -15,7 +15,13 @@
             </select>
         </div>
         <div> 
-            <button type="submit" @click="onSubmit">Submit</button>
+            <button type="submit" @click="onSubmit">
+                <span v-if="newFilms">Submit Rating</span>
+                <span v-else>Update Rating</span>
+            </button>
+            <button v-if="!newFilms" @click="onDelete"> 
+                Delete Movie
+            </button>
         </div>
     </form>
 
@@ -25,19 +31,24 @@
 
 <script>
 export default {
+    props: {
+        newFilms: Boolean,
+        savedRating: Number
+    },
     data: function(){
         return{
-            rating: 3,
+            rating: this.savedRating,
             comment: ""
         }
     },
     methods: {
         onSubmit(event){
             event.preventDefault();
-            // eslint-disable-next-line no-debugger
-            debugger
-            this.$emit('childToParent', this.titleSearch);
-
+            this.$emit('childToParent', this.comment, this.rating);
+        },
+        onDelete(event) {
+            event.preventDefault();
+            this.$emit('deleteFromParent')
         }
     }
 }

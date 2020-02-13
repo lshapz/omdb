@@ -1,0 +1,12 @@
+source 'https://rubygems.org'
+
+
+gem 'activerecord'
+gem 'sinatra-activerecord'
+gem 'rake'
+gem 'sinatra-json'
+gem 'pg'
+gem 'shotgun'
+gem 'sinatra-cross_origin'
+gem 'rack-cors'
+gem 'sinatra-cors'
