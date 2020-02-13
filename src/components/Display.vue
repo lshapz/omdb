@@ -1,12 +1,10 @@
 <template>
   <div class="display">
-    <h1>{{movie['Title']}} ({{movie['Year']}}) </h1>
-    <img :src="movie['Poster']">
-    <!-- If there is no poster, please put a placeholder image instead -->
-
-    <blockquote>
-      {{movie['Plot']}}
-    </blockquote>
+    <h3>{{movie['Title']}} ({{movie['Year']}}) </h3>
+    <img :src="posterPresent">
+    <div v-if="opt"> 
+      <button @click="saveMovie">Save Movie</button>
+    </div>
   </div>
 </template>
 
@@ -14,7 +12,26 @@
 export default {
   name: 'Display',
   props: {
-    movie: Object
+    movie: Object,
+    opt: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    posterPresent() {
+      if (this.movie.Poster == 'N/A'){
+        return "https://via.placeholder.com/300x422?text=No%20Poster%20Found"
+      } else {
+        return this.movie.Poster;
+      }
+    }
+  },
+  methods: {
+    saveMovie(event) {
+      event.preventDefault()
+      this.$emit('childToParent', this.movie)
+    }
   }
 }
 </script>
